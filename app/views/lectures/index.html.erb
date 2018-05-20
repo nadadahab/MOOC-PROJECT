@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+
+<h1 class="text-center"> Lectures</h1>
+<br>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Content</th>
+      <th>Attachment</th>
+      <th>Course</th>
+      <th>Created by</th>
+      <th>Rating </th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lectures.each do |lecture| %>
+      <tr>
+        <td><%= lecture.content.html_safe %></td>
+        <td><%= link_to "Download File", lecture.attachment_url %></td>
+        <td><%= lecture.course.title%></td>
+        <td><%= lecture.user.name%></td>
+        <td>
+            <%= link_to lecture_like_path(lecture), method: :put do %>
+               Like
+               <%= lecture.get_likes.size %>
+            <% end %>
+
+            <%= link_to lecture_dislike_path(lecture), method: :put do %>
+              Dislike
+              <%= lecture.get_dislikes.size %>
+            <% end %>
+        </td>
+
+        <td>
+        <%= link_to lecture_spam_path(lecture) , method: :post do%>
+        Spam
+         <% unless current_user.lectures.include?(lecture) %>
+          <%= 0 %>
+         <% else %>
+           <%= 1 %>
+         <% end %>
+         <% end %>
+        </td>
+        <td><%= link_to 'Show  More', lecture %></td>
+        <% if can? :manage, lecture %>
+        <td><%= link_to 'Edit', edit_lecture_path(lecture) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<% if can? :manage, @lecture %>
+<%= link_to 'New Lecture', new_lecture_path %>
+<% end %>

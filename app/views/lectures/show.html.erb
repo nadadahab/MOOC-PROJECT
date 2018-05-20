@@ -1,0 +1,48 @@
+<p id="notice"><%= notice %></p>
+<div>
+<h1 class="text-center">Lecture</h1>
+<br>
+<p>
+  <strong>Content:</strong>
+  <%= @lecture.content.html_safe %>
+
+</p>
+<p>
+  <strong>Attachment:</strong>
+ <%= link_to "Download File", @lecture.attachment_url %>
+</p>
+
+<p>
+  <strong>Course:</strong>
+  <%= @lecture.course.title %>
+</p>
+
+<p>
+  <strong>Created by:</strong>
+  <%= @lecture.user.name %>
+</p>
+
+<p>
+  <strong>Comments:</strong>
+ <%= commontator_thread(@lecture) %>
+</p>
+
+           <%= link_to lecture_like_path(@lecture), method: :put do %>
+               Like
+               <%= @lecture.get_likes.size %>
+            <% end %>
+
+            <%= link_to lecture_dislike_path(@lecture), method: :put do %>
+              Dislike
+              <%= @lecture.get_dislikes.size %>
+            <% end %>
+
+<br>
+<br>
+
+<% if can? :manage, @lecture %>
+<%= link_to 'Edit', edit_lecture_path(@lecture) %>
+<% end %>
+<br>
+<%= link_to 'Back', lectures_path %>
+</div>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Project</title>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag Ckeditor.cdn_url %>
+  <%= csrf_meta_tags %>
+</head>
+
+
+<body>
+<% if current_user %>
+<nav class="navbar navbar-default">
+
+  <a class="navbar-brand" href="#">MOOC</a>
+
+     <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item">
+       <a href="/users/edit">Edit Profile</a>
+      </li>
+      <li class="nav-item">
+        <a href="/courses">Courses</a>
+      </li>
+       <li class="nav-item ">
+       <a href="/lectures">Lectures</a>
+      </li>
+       <li class="nav-item ">
+       <a href="/users/sign_out">Logout</a>
+      </li>
+      </ul>
+<% else %>
+     <a class="navbar-brand" href="#">MOOC</a>
+     <ul class="nav navbar-nav navbar-right ">
+       <li class="nav-item">
+       <a href="/users/sign_up">Signup</a>
+      </li>
+      <li class="nav-item">
+       <a href="/users/sign_in">Log in</a>
+      </li>
+
+    </ul>
+
+
+</nav>
+<% end %>
+
+<div class="container">
+<%= yield %>
+</div>
+</body>
+</html>
